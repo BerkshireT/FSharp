@@ -4,67 +4,189 @@
 <title>Introduction to F#</title>
 </head>
 
-<!--
-Author: Tyler Berkshire
-
-CPS 452: Emerging Programming Languages, Fall 2019
--->
-
 <body>
 
 <table border="0" width="80%">
 <tr>
 <td>
-
+   
 <h1 align="center">Introduction to F#</h1>
-
 <hr align="center" width="80%" size="10"/>
 
-<h2><hr align="left" width="40%"/>Key language concepts in F#
-<hr align="left" width="40%"/></h2>
+<b>Author:</b> Tyler Berkshire
+<br><br>
+<b>CPS 452:</b> Emerging Programming Languages, Fall 2019
+
+<h2><hr align="left" width="40%"/>Brief History</h2>
 <ul>
 
-<li>...</li>
-<li>...</li>
+<li>Developed by F# Software Foundation, Microsoft, and open contributors</li>
+<li>Member of the ML language family</li>
+<li>Originally created by Don Syme from Microsoft Research in Cambridge, UK</li>
+<li>Strong influences from C#, Python, Haskell, Scala, and Erlang</li>
+<li>Created in 2005, large version updates yearly (currently 4.7 as of Sept. 2019)</li>
+
 
 </ul>
 
 <h2><hr align="left" width="40%"/>
-Core ...
+Key language concepts in F#
+<hr align="left" width="40%"/></h2>
+<ul>
+
+<li>Developed as a cross-platform Common Language Infrastructure (CLI) language</li>
+   <ul>
+      <li>The CLI is a standardized specification from Microsoft for use of languages on different platforms</li>
+      <li>.NET Framework and .NET Core are examples of implementations of the CLI</li>
+   </ul>
+<li>Strongly typed (algebraic)</li>
+<li>Multi-paradigm (Imperative, Object-Oriented, Functional) with an emphasis on Functional</li>
+<li>Data is immutable</li>
+<li>Functions are first-class</li>
+<li>Pattern matching for control flow</li>
+<li>Metaprogramming. F# is commonly used to generate:</li>
+   <ul>
+      <li>JavaScript code</li>
+      <li>GPU code</li>
+      <li>Other web framework code</li>
+      <ul>
+         <li>For example, in the WebSharper framework F# is executed as .NET code server-side and generates JavaScript for client-side</li>
+      </ul>
+   </ul>
+<li>Eager evaluation with capability to lazily evaluate (yield)</li>
+<li>Async workflows</li>
+</ul>
+
+<h2><hr align="left" width="40%"/>
+Core F#
+<hr align="left" width="40%"/></h2>
+<ul>
+<li><a href="#algebraic">Algebraic Types</a></li>
+   <ul>
+      <li>Defined from a combination of product and sum constructions</li>
+      <li>Compound types are built by:</li>
+      <ul>
+         <li>A combination of values from a set of types (product)</li>
+         <li>A disjoint union from a set of types (sum)</li>
+      </ul>
+   </ul>
+<li><a href="#pattern">Pattern Matching</a></li>
+   <ul>
+      <li>Useful for edge cases and error handling</li>
+      <li>Match with generic cases:</li>
+      <pre>
+match functionReturn with
+   | Some returnValue -> printfn "We got a proper return of %A" returnValue
+   | None -> printfn "We found an error case"
+      </pre>
+      <li>Match with specific cases:</li>
+      <pre>
+match list with
+   | [] -> printfn "Empty list" // empty list
+   | [x] -> printfn "Only %A" x // only one item in the list
+   | x::y::tail -> // at least two items in the list
+      printfn "First %A, Second %A, Tail %A" x y tail
+      </pre>
+   </ul>
+<li><a href="#pcc">Piping, Composition, and Currying</a></li>
+   <ul>
+      <li>Piping is used for a sequence of operations (similar to UNIX)</li>
+      <li>Composition calls two functions in a sequence and returns a new function (chaining)</li>
+      <li>Currying creates a new function by applying 1 to N-1 args to a function of N args</li>
+   </ul>
+<li><a href="#acp">Asyncronous, Concurrent, and Parallel Programming</a></li>
+   <ul>
+      <li>Asynchronous workflows can be easily composed, scheduled and transformed with the <tt>Async</tt> module</li>
+      <li>The actor model of concurrency is built in via <tt>MailboxProcessor</tt></li>
+      <li>True CPU parallelism can be achieved using the .NET Task Parallel Library</li>
+   </ul>
+</ul>
+
+<h2 id="algebraic"><hr align="left" width="40%"/>
+Algebraic Types
 <hr align="left" width="40%"/></h2>
 <ul>
 <li>...</li>
 <li>...</li>
 </ul>
 
-<h2><hr align="left" width="40%"/>Reference</h2>
+<h2 id="pattern"><hr align="left" width="40%"/>
+Pattern Matching
+<hr align="left" width="40%"/></h2>
+<ul>
+<li>...</li>
+<li>...</li>
+</ul>
+
+<h2 id="pcc"><hr align="left" width="40%"/>
+Piping, Composition, and Currying
+<hr align="left" width="40%"/></h2>
+<ul>
+<li>...</li>
+<li>...</li>
+</ul>
+
+<h2 id="acp"><hr align="left" width="40%"/>
+Asyncronous, Concurrent, and Parallel Programming
+<hr align="left" width="40%"/></h2>
+<ul>
+<li>...</li>
+<li>...</li>
+</ul>
+
+<h2><hr align="left" width="40%"/>
+Exercises
+<hr align="left" width="40%"/></h2>
+<ul>
+<li>...</li>
+<li>...</li>
+</ul>
+
+<p><hr align="left" width="40%"/><a href="#top">Top</a></p>
+
+<h2><hr align="left" width="40%"/>References</h2>
 
 <ul>
 <table>
 
 <tr>
-<td valign="top">[EMLP]</td>
-<td>J.D. Ullman.
-<!--
-<a href="http://infolab.stanford.edu/~ullman/emlp.html"><i>Elements
-of ML Programming</i></a>.
--->
-<i>Elements of ML Programming</i>.
-Prentice Hall, Upper Saddle River, NJ, Second edition, 1997.</td>
+<td>
+"<a href="https://en.wikipedia.org/wiki/F_Sharp_(programming_language)">F Sharp (programming language)</a>."
+<i>Wikipedia: The Free Encyclopedia</i>. Wikimedia Foundation, Inc. 21 October 2019.
+</td>
+</tr>
+
+<tr>
+<td>
+“<a href="https://fsharp.org/">F# Software Foundation</a>.”
+<i>F# Software Foundation</i>, F# Software Foundation, 2019.
+</td>
+</tr>
+
+<tr>
+<td>Syme, Don, et al.
+"<a href="https://fsharp.org/specs/language-spec/4.1/FSharpSpec-4.1-latest.pdf">The F# 4.1 Language Specification</a>."
+<i>F# Software Foundation</i>, 2016.
+</td>
+</tr>
+
+<tr>
+<td>W., Scott,
+"<a href="https://fsharpforfunandprofit.com/posts/key-concepts/">Four Key Concepts</a>."
+<i>fsharpforfunandprofit</i>, 06 April 2012.
+</td>
 </tr>
 
 <!--
 <tr>
-<td valign="top">[TLML]</td>
-<td>M. Felleisen and D.P. Friedman.
+<td valign="top">[EMLP]</td>
+<td>J.D. Ullman.
+<a href="http://infolab.stanford.edu/~ullman/emlp.html"><i>Elements
+of ML Programming</i></a>.
 -->
 <!--
-<a href="http://www.ccs.neu.edu/home/matthias/BTML/"><i>The Little MLer</i></a>.
--->
-<!--
-<i>The Little MLer</i>.
-MIT Press, Cambridge, MA, 1997.
-</td>
+<i>Elements of ML Programming</i>.
+Prentice Hall, Upper Saddle River, NJ, Second edition, 1997.</td>
 </tr>
 -->
 
