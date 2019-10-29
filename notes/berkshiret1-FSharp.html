@@ -109,7 +109,7 @@ Algebraic Types
 <li>F# has a mixture of types:</li>
    <ul>
       <li>Common .NET types (int, bool, string...)</li>
-      <li>F# specific types (Lists, Records, Discriminated Unions...</li>
+      <li>F# specific types (Lists, Records, Discriminated Unions...)</li>
    </ul>
 <li>Advantages to using F# specific types when creating new types:</li>
    <ul>
@@ -124,20 +124,47 @@ Algebraic Types
 <li>Simple (record) type example:</li>
 <pre>
 open System
-let main()
-   type Person = { FirstName: string; LastName: string }
-   let Tyler = { FirstName = "Tyler"; LastName = "Berkshire" } // construct
-   printfn "%s\'s last name is %s" Tyler.FirstName Tyler.LastName // deconstruct
+type Person<'a> = { FirstName: string; LastName: string; Weight: 'a }                           // quote denotes generic type
+let main() =
+   let Tyler = { FirstName = "Tyler"; LastName = "Berkshire"; Weight = 145 }                    // construct
+   let TylerB = { FirstName = "Tyler"; LastName = "Berkshire"; Weight = "145" }   
+   printfn "%s\'s last name is %s and weighs %A" Tyler.FirstName Tyler.LastName Tyler.Weight    // deconstruct
+   printfn "%s\'s last name is %s and weighs %A" TylerB.FirstName TylerB.LastName TylerB.Weight 
+   let { Weight = 145.50 } = Tyler                                                              // error: cannot change generic once assigned
 </pre>
-<li></li>
+<li>Simple (discriminated union) type example:</li>
+<pre>
+type Tree<'a> = Leaf | T of Tree<'a> * 'a * Tree<'a>
+let main() = 
+   let leaf1 = T(Leaf)
+   let leaf2 = T(Leaf)
+   let tree = T(leaf1, "Tyler", leaf2)
+</pre>
+<li>Lists can only be of the same type</li>
+<pre>
+let list1 = [ 1; 2; 3; 4; 5 ]                     // list construction
+let list2 = [ 1 .. 5 ]                            // using ranges
+let list3 = 20 :: list2                           // cons
+let list4 = list3 @ [ 6; 7; 8 ]                   // append
+let list5 = [ for x in 1 .. 10 do yield (x * x) ] // generator comprehension (with lazy eval)
+</pre>
+<li>Tuples can be of mixed types</li>
+<pre>
+let tuple1 = ("CPS", 452)        // type string * int
+let tuple2 = (452, "CPS")        // int * string /= string * int
+fst tuple1                       // "CPS"
+snd tuple1                       // 452
+let tuple3 = ("CPS", 452, true)  // cannot use fst or snd on non-pair tuples
+tuple3.GetHashCode()             // tuples can be used as dictionary keys w/ automatically defined hash values
+</pre>
 </ul>
 
 <h2 id="pattern"><hr align="left" width="40%"/>
 Pattern Matching
 <hr align="left" width="40%"/></h2>
 <ul>
-<li>...</li>
-<li>...</li>
+<li></li>
+<li></li>
 </ul>
 
 <h2 id="pcc"><hr align="left" width="40%"/>
@@ -175,6 +202,13 @@ Exercises
 <td>
 "<a href="https://en.wikipedia.org/wiki/F_Sharp_(programming_language)">F Sharp (programming language)</a>."
 <i>Wikipedia: The Free Encyclopedia</i>. Wikimedia Foundation, Inc. 21 October 2019.
+</td>
+</tr>
+
+<tr>
+<td>
+"<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/">F# Guide</a>."
+<i>Microsoft</i>. Microsoft, 08 February 2018.
 </td>
 </tr>
 
