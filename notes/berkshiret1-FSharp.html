@@ -106,8 +106,30 @@ match list with
 Algebraic Types
 <hr align="left" width="40%"/></h2>
 <ul>
-<li>...</li>
-<li>...</li>
+<li>F# has a mixture of types:</li>
+   <ul>
+      <li>Common .NET types (int, bool, string...)</li>
+      <li>F# specific types (Lists, Records, Discriminated Unions...</li>
+   </ul>
+<li>Advantages to using F# specific types when creating new types:</li>
+   <ul>
+      <li>Immutable</li>
+      <li>Cannot be null</li>
+      <li>Built-in equality and comparison</li>
+      <li>Built-in pretty printing</li>
+   </ul>
+<li>New types are constructed using sum and product operations</li>
+<li>An infinite number of new types can be made using these two operations, i.e. Absract Data Types (ADT)</li>
+<li>Types cannot be declared inside of functions, only in namespaces or modules</li>
+<li>Simple (record) type example:</li>
+<pre>
+open System
+let main()
+   type Person = { FirstName: string; LastName: string }
+   let Tyler = { FirstName = "Tyler"; LastName = "Berkshire" } // construct
+   printfn "%s\'s last name is %s" Tyler.FirstName Tyler.LastName // deconstruct
+</pre>
+<li></li>
 </ul>
 
 <h2 id="pattern"><hr align="left" width="40%"/>
