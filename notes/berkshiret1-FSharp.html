@@ -98,7 +98,7 @@ match list with
       <li>Composition calls two functions in a sequence and returns a new function (chaining)</li>
       <li>Currying creates a new function by applying 1 to N-1 args to a function of N args</li>
    </ul>
-<li><a href="#acp">Asyncronous, Concurrent, and Parallel Programming</a></li>
+<li><a href="#acp">Asynchronous, Concurrent, and Parallel Programming</a></li>
    <ul>
       <li>Asynchronous workflows can be easily composed, scheduled and transformed with the <tt>Async</tt> module</li>
       <li>The actor model of concurrency is built in via <tt>MailboxProcessor</tt></li>
@@ -273,16 +273,70 @@ printQ <@@ let f x = x + 10 in f 10 @@>  // let f = fun (x:System.Int32) -> x + 
 Piping, Composition, and Currying
 <hr align="left" width="40%"/></h2>
 <ul>
-<li></li>
-<li>...</li>
+<li>Piping</li>
+<ul>
+   <li>Used to perform a sequence of operations on some value</li>
+   <li>Similar to UNIX, the output of each function becomes the input for the next</li>
+   <li><code>\></code> is the symbol for a pipe</li>
+   <pre>
+let list = [1 .. 10 ] |> Seq.filter (fun x -> x % 2 <> 0)
+                      |> Seq.map (fun x -> x * x)
+                      |> Seq.sum                           // 165
+   </pre>
+</ul>
+<li>Composition</li>
+<ul>
+   <li>Calls two functions in a sequence</li>
+   <li>Returns a function instead of immediately invoking the sequence</li>
+   <li><code>>></code> and <code><<</code> are the symbols for function composition</li>
+   <pre>
+let composed = Seq.filter (fun x -> x % 2 <> 0)
+               >> Seq.map (fun x -> x * x)
+               >> Seq.sum
+composed [1 .. 10]                                         // 165
+   </pre>
+</ul>
+<li>Piping and function compositions are very similar</li>
+<li>The main difference is whether you want the function declaration to be explicit (piping) or implicit and reusable (function composition)</li>
+<li>These are equivalent:</li>
+<pre>
+foo (fun x -> x |> bar |> baz)     // Explicit piping
+foo (bar >> baz)                   // Function composition
+</pre>
+<li>Currying</li>
+<ul>
+   <li>Applies arguments to functions to create new functions</li>
+   <li>Functions taking more than one argument are automatically curried by the compiler</li>
+   <pre>
+let printTwo a b = printfn "%A and %A" a b      // Uncurried (int -> unit)
+
+let printTwoCurried a =                         // Curried   (int -> int -> unit)
+   let printTwoSecond b =
+      printfn "%A and %A" a b
+   printTwoSecond
+   </pre>
+   <li>Currying also allows for the partial application of functions</li>
+<pre>
+let filterEvens = List.filter (fun x -> x % 2 = 0)
+filterEvens [ 1 .. 5 ]                               // [2;4]
+</pre>
+   <li>.NET base class library functions are often re-written in wrappers to better match the partial function application form</li>
+<pre>
+let replace oldStr newStr (s:String) = s.Replace(oldValue = oldStr, newValue = newStr)   // Input string is now the last parameter
+let result =                                                                             // "452"
+   "CPS"
+   |> replace "CPS" "452"
+</pre>
+</ul>
 </ul>
 
 <h2 id="acp"><hr align="left" width="40%"/>
-Asyncronous, Concurrent, and Parallel Programming
+Asynchronous, Concurrent, and Parallel Programming
 <hr align="left" width="40%"/></h2>
 <ul>
-<li>...</li>
-<li>...</li>
+<li>Actor Model</li>
+<li>Coroutines</li>
+<li>Lazy Evaluation</li>
 </ul>
 
 <h2><hr align="left" width="40%"/>
