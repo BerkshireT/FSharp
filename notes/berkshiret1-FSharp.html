@@ -69,24 +69,28 @@ Core F#
          <li>A combination of values from a set of types (product)</li>
          <li>A disjoint union from a set of types (sum)</li>
       </ul>
-   </ul>
-<li><a href="#pattern">Pattern Matching</a></li>
-   <ul>
-      <li>Useful for edge cases and error handling</li>
-      <li>Match with generic cases:</li>
-      <pre>
+      <li>Pattern Matching is useful for edge cases and error handling:</li>
+      <ul>
+         <li>Generic cases:</li>
+         <pre>
 match functionReturn with
    | Some returnValue -> printfn "We got a proper return of %A" returnValue
    | None -> printfn "We found an error case"
-      </pre>
-      <li>Match with specific cases:</li>
-      <pre>
+         </pre>
+         <li>Specific cases:</li>
+         <pre>
 match list with
-   | [] -> printfn "Empty list" // empty list
-   | [x] -> printfn "Only %A" x // only one item in the list
-   | x::y::tail -> // at least two items in the list
-      printfn "First %A, Second %A, Tail %A" x y tail
-      </pre>
+   | [] -> printfn "Empty list"                                     // empty list
+   | [x] -> printfn "Only %A" x                                     // only one item in the list
+   | x::y::tail -> printfn "First %A, Second %A, Tail %A" x y tail  // at least two items in the list
+         </pre>
+      </ul>
+   </ul>
+<li><a href="#meta">Metaprogramming</a></li>
+   <ul>
+      <li>Quotations allow the generation of Abstract Syntax Trees (ASTs) which represent F# code</li>
+      <li>These ASTs can be used to generate F# code or code in some other language</li>
+      <li>Quotations are not compiled as part of the program, but as object representing an expression</li>
    </ul>
 <li><a href="#pcc">Piping, Composition, and Currying</a></li>
    <ul>
@@ -159,19 +163,117 @@ tuple3.GetHashCode()             // tuples can be used as dictionary keys w/ aut
 </pre>
 </ul>
 
-<h2 id="pattern"><hr align="left" width="40%"/>
-Pattern Matching
+<h2 id="meta"><hr align="left" width="40%"/>
+Metaprogramming
 <hr align="left" width="40%"/></h2>
 <ul>
-<li></li>
-<li></li>
+<li><code>Microsoft.FSharp.Quotations</code> is the module used for quotations</li>
+<li>Quotations can be created with and without type information</li>
+<ul>
+   <li>Use <code><@</code> and <code>@></code> to include type information</li>
+   <pre>
+let expr : Expr<'T> = <@ 1 + 1 @>   // 'T will be int in this case
+   </pre>
+   <li>Use <code><@@</code> and <code>@@></code> to not include type information</li>
+   <pre>
+let expr2 : Expr = <@@ 1 + 1 @@>    // The resulting Expr is the raw non-generic type
+   </pre>
+</ul>
+<li>Traversing the AST is faster without type information</li>
+<li>Quotations must include a complete expression i.e. the definition of the bound name and the expression which uses it</li>
+<ul>
+   <li>Valid</li>
+   <pre>
+<@ let f x = x + 10 in f 20 @>
+<@ 
+   let f x = x + 10
+   f 20
+@>
+   </pre>
+   <li>Not valid</li>
+   <pre>
+<@ let f x = x + 10 @>
+   </pre>
+</ul>
+<li>Splicing allows for the combination of code quotations with expressions created programmatically or from other quotations</li>
+<ul>
+   <li>Use <code>%</code> and <code>%</code> to include type information</li>
+   <pre>
+<@ 1 + %expr @>
+   </pre>
+   <li>Use <code>%%</code> and <code>%%</code> to not include type information</li>
+   <pre>
+<@@ 1 + %%expr @@>
+   </pre>
+</ul>
+<li>The F# equivalent of an <code>eval</code> statement is implemented by compiling F# code with the F# PowerPack API</li>
+<li>Here's an example of using quotations which translates simple F# code into expression objects and then prints back the F# code representation:</li>
+<pre>
+open System
+open Microsoft.FSharp.Quotations.Patterns
+open Microsoft.FSharp.Quotations.DerivedPatterns
+
+let printQ expr =
+   let rec print expr =
+      match expr with
+      | Application(expr1, expr2) -> // Function application
+         print expr1
+         printf " "
+         print expr2
+      | SpecificCall <@@ (+) @@> (_, _, exprList) -> // Matches a call to +
+         print exprList.Head
+         printf " + "
+         print exprList.Tail.Head
+      | Call(_, methodInfo, exprList) ->
+         printf "%s.%s(" methodInfo.DeclaringType.Name methodInfo.Name
+         if (exprList.IsEmpty) then printf ")" else
+         print exprList.Head
+         for expr in exprList.Tail do
+            printf ","
+            print expr
+         printf ")"
+      | Int32(n) ->
+         printf "%d" n
+      | Lambda(param, body) -> // Lambda expression
+         printf "fun (%s:%s) -> " param.Name (param.Type.ToString())
+         print body
+      | Let(var, expr1, expr2) -> // Let binding
+         if (var.IsMutable) then
+            printf "let mutable %s = " var.Name
+         else
+            printf "let %s = " var.Name
+         print expr1
+         printf " in "
+         print expr2
+      | PropertyGet(_, propOrValInfo, _) ->
+         printf "%s" propOrValInfo.Name
+      | String(str) ->
+         printf "%s" str
+      | Value(value, typ) ->
+         printf "%s" (value.ToString())
+      | Var(var) ->
+         printf "%s" var.Name
+      | _ -> printf "%s" (expr.ToString())
+   print expr
+   printfn ""
+
+let a = 2
+let exprLambda = <@ fun x -> x + 1 @>    // type (int -> int)
+let exprCall = <@ a + 1 @>               // type unit
+let exprUnimplemented = <@ a - 1 @>
+                                         // output:
+printQ exprLambda                        // fun (x:System.Int32) -> x + 1
+printQ exprCall                          // a + 1
+printQ exprUnimplemented                 // Operators.op_Subtraction(a,1)
+printQ <@@ let f x = x + 10 in f 10 @@>  // let f = fun (x:System.Int32) -> x + 10 in f 10
+</pre>
 </ul>
 
 <h2 id="pcc"><hr align="left" width="40%"/>
 Piping, Composition, and Currying
 <hr align="left" width="40%"/></h2>
 <ul>
-<li>...</li>
+<li></li>
 <li>...</li>
 </ul>
 
