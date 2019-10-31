@@ -1,49 +1,70 @@
 <div id="F#">
-   <h2>F# Homework</h2>
-   
-   <b>Author</b>: Tyler Berkshire
-   <br/>
-   <br/>
-   <b>CPS 452: Emerging Programming Languages, Fall 2019</b>: 
-   <br/>
-   <br/>
-   
-   
-   <b>Assigned</b>:
-   <br/>
-   <b>Due</b>: 
-   <br/>
-   <br/>
-   <b>Total points</b>: 30 points
-   <br/>
-   <br/>
-   <a href="http://isidore.udayton.edu">Isidore</a> |
-   <a href="http://academic.udayton.edu/SaverioPerugini/courses/cps343/style.html">Style guide</a> |
-   <a href="#integrity">Academic Integrity</a> |
-   <a href="#evaluation">Evaluation Criteria</a> 
-   <br/>
-   <hr noshade size="2"/>
-   
-   <br/>
-   
-   <ol>
-   
-   <li>(10 points) 
-   <br/>
-   <br/>
-   </li>
-   
-   <li>(10 points)
-   <br/>
-   <br/>
-   </li>
-   
-   <li>(10 points) 
-   <br/>
-   <br/>
-   </li>
-   
-   </ol>
-   
-   <p class="top"><a href="#">TOC</a></p>
-   </div>
+<h2>F# Homework</h2>
+
+<b>Author</b>: Tyler Berkshire
+<br/>
+<br/>
+<b>CPS 452: Emerging Programming Languages, Fall 2019</b>: 
+<br/>
+<br/>
+
+
+<b>Assigned</b>:
+<br/>
+<b>Due</b>: 
+<br/>
+<br/>
+<b>Total points</b>: 30 points
+<br/>
+<br/>
+<a href="http://isidore.udayton.edu">Isidore</a> |
+<a href="http://academic.udayton.edu/SaverioPerugini/courses/cps343/style.html">Style guide</a> |
+<a href="#integrity">Academic Integrity</a> |
+<a href="#evaluation">Evaluation Criteria</a> 
+<br/>
+<hr noshade size="2"/>
+
+<br/>
+
+<ol>
+
+<li>
+<b>Sequences/Types</b> (10 points) 
+<br/>
+Define a generic binary tree type and use <code>yield</code>/<code>yield!</code> to create a single sequence representing the inorder traversal of the tree.
+<br/>
+Then print the first and last element of the traversal.
+<br>
+Test input/output:
+<pre>
+let tree1 = Tree(6, Tree(2, Leaf(1), Leaf(3)), Leaf(9))
+let seq1 = inorder tree1
+printfn "%A" seq1
+let first = Seq.head seq1
+let last = Seq.last seq1
+printfn "First element: %A" first                         // 1
+printfn "Last element: %A" last                           // 9
+
+let tree2 = Tree(10, Tree(4, Leaf(2), Leaf(5)), Tree(15, Tree(13, Leaf(12), Leaf(14)), Leaf(16)))
+let trav2 = inorder tree2
+let first2 = Seq.head trav2
+let last2 = Seq.last trav2
+printfn "First element: %A" first2                         // 2
+printfn "Last element: %A" last2                           // 16
+</pre>
+</li>
+
+<li>(10 points)
+<br/>
+<br/>
+</li>
+
+<li>(10 points) 
+<br/>
+<br/>
+</li>
+
+</ol>
+
+<p class="top"><a href="#">TOC</a></p>
+</div>
