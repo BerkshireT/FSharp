@@ -4,7 +4,7 @@
 %
 %   Date    Version   Initials  Comments
 %-------------------------------------------
-%  15Oct19 01.00.00  TPB      Initial release
+%  31Oct19 01.00.00  TPB      Initial release
 
 \documentclass[10pt,letterpaper]{letter}
 
@@ -63,8 +63,8 @@
 \definecolor{HeadBackground}{HTML}{333333}
 \definecolor{FootBackground}{HTML}{666666}
 \definecolor{TextColor}{HTML}{333333}
-\definecolor{DarkBackground}{HTML}{5704c1}
-\definecolor{LightBackground}{HTML}{e4d4f4}
+\definecolor{DarkBackground}{HTML}{30B9DB}
+\definecolor{LightBackground}{HTML}{ccd9e5}
 \renewcommand{\familydefault}{\sfdefault}
 \color{TextColor}
 
@@ -74,7 +74,7 @@
 \fancyhead{} % Set header to blank
 \fancyhead[L]{
 \noindent
-    \vspace{5pt}\hspace{0pt}\large{\bf{\textcolor{DarkBackground}{\textrm{F\# Cheat Sheet}}}} \\}
+    \vspace{5pt}\hspace{0pt}\large{\bf{\textcolor{DarkBackground}{\textrm{F\# Cheat Sheet (Author: Tyler P. Berkshire)}}}} \\}
 
 \hfuzz=20pt
 \vfuzz=20pt
@@ -95,15 +95,27 @@
 \begin{tabularx}{5.377cm}{p{5.377 cm} x{0 cm} }
 
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{General format for commands}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Key features}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-vi [\textit{n}]operator[\textit{m}]object \tn 
+Strongly typed with algebraic-style types \tn 
 
 % Row 
 \SetRowColor{white}
-ex :[\textit{address}]command[\textit{options}] \tn 
+Easy concurrency \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+Extensive multi-paradigm features\tn
+
+% Row 
+\SetRowColor{white}
+Integrated with .NET \tn
+
+% Row 
+\SetRowColor{LightBackground}
+Metaprogramming\tn
 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
@@ -115,39 +127,47 @@ ex :[\textit{address}]command[\textit{options}] \tn
 \begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
 
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Invoking and exiting vi}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Algebraic Types}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-\$vi file & Invoke vi \tn 
+fun() & Function \tn 
 
 % Row 
 \SetRowColor{white}
-\$view file & Opens file in read-only mode \tn 
+unit & A function with one range value \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-:wq & Write and quit \tn 
+type & Keyword to declare custom types \tn 
 
 % Row 
 \SetRowColor{white}
-:w & Write \tn 
+(x,y) & Tuples can be heterogeneous \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-:w file & Write to file \tn 
+\{x:int, y:float\} & Records are labelled tuples \tn 
 
 % Row 
 \SetRowColor{white}
-:w! file & Overwrite existing file\tn 
+I of int | B of bool & Discriminated unions \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-:q & Quit \tn 
+<'a> & Single quote denotes generic type \tn 
 
 % Row 
 \SetRowColor{white}
-:q! & Force quit \tn 
+Option & The option type is either \textit{Some} or \textit{None} \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+{[ ]} & Lists are immutable and homogeneous \tn 
+
+% Row 
+\SetRowColor{white}
+seq\{\} & Sequences use \textit{yield} and \textit{yield!} to create infinite data types \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 
@@ -157,23 +177,23 @@ ex :[\textit{address}]command[\textit{options}] \tn
 
 \begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Display Text (CTRL+<character>)}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Core syntax}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-d & Scroll down \tn 
+let & Bind value to a name \tn 
 
 % Row 
 \SetRowColor{white}
-u & Page forward \tn 
+//, (**) & Inline and multi-line comments \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-f & Page forward \tn 
+\textit{indentations} & Separates code blocks \tn 
 
 % Row 
 \SetRowColor{white}
-b & Page backward \tn 
+\textit{whitespace} & Separates parameters \tn 
 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
@@ -183,54 +203,43 @@ b & Page backward \tn
 \begin{tabularx}{5.377cm}{p{1.7 cm} x{3.277 cm} }
 \SetRowColor{DarkBackground}
 
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Cursor Movement}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Control Flow}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-<RIGHT>, <SP>, or l & Next character\tn 
+for x in \{ \} do & Standard for loop \tn 
 
 % Row 
 \SetRowColor{white}
-<LEFT>, <BS>, or h & Previous character \tn 
+while x do & Standard while loop \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-<DOWN> or j & Character below \tn 
+match x with |... |... & Pattern matching against a discriminated union \tn 
 
 % Row 
 \SetRowColor{white}
-<UP> or k & Character above \tn 
+when & Guards help with complicated pattern matching \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-<RET> & Beginning of line \tn 
+|> & Pipes emulate UNIX pipes. Output of the left becomes input of the right \tn 
 
 % Row 
 \SetRowColor{white}
-- & Beginning of previous line \tn 
+<| & Reverse pipe \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-G & Go to last line \tn 
+> > & Function composition returns a function instead of immediately evaluating \tn 
 
 % Row 
 \SetRowColor{white}
-:[\textit{n}] & Go to line number [\textit{n}]\tn 
+< < & Reverse function composition \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-\$ & End of line\tn 
-
-% Row 
-\SetRowColor{white}
-w or [\textit{n}]w & Forward beginning of word ([\textit{n}] words)\tn
-
-\SetRowColor{LightBackground}
-e or [\textit{n}]e & End of word ([\textit{n}] words)\tn 
- 
-% Row 
-\SetRowColor{white}
-b or [\textit{n}]b & Back beginning of word ([\textit{n}] words)\tn 
+\textit{currying} & Functions can be curried and partially applied \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
@@ -238,27 +247,39 @@ b or [\textit{n}]b & Back beginning of word ([\textit{n}] words)\tn
 
 \begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Text Creation}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Metaprogramming}} \tn
 
 % Row 
 \SetRowColor{LightBackground}
-a & Append after cursor \tn 
+\textit{quotations} & Compiled into objects representing the program \tn 
 
 % Row 
 \SetRowColor{white}
-i & Insert before cursor \tn 
+<@ @> & Quotation with type information \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-o & Open line below\tn 
+<@@ @@> & Quotation without type information \tn 
 
 % Row 
 \SetRowColor{white}
-O & Open line above \tn 
+Expr<'T> & Resulting type of a quotation \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+\% & Splice a typed expression into a quotation \tn 
 
 % Row 
 \SetRowColor{white}
-<ESC> & Exit text entry mode \tn 
+\%\% & Splice a non-typed expression into a quotation \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+Patterns & Active pattern module used to analyze expression objects \tn 
+
+% Row 
+\SetRowColor{white}
+ExprShape & Module to traverse expression trees with fewer active patterns \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
@@ -266,7 +287,7 @@ O & Open line above \tn
 
 \begin{tabularx}{5.377cm}{p{1.5 cm} x{3.477 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Delete Text}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Asynchronous Workflows}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
@@ -298,7 +319,7 @@ u & Undo last editing command\tn
 
 \begin{tabularx}{5.377cm}{p{1.5 cm} x{3.477 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Searching}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Actor Model}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
@@ -321,9 +342,9 @@ N & Previous match \tn
 \end{tabularx}
 \par\addvspace{1.3em}
 
-\begin{tabularx}{5.377cm}{p{1.6 cm} x{3.377 cm} }
+\begin{tabularx}{5.377cm}{p{1.7 cm} x{3.277 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Change Text}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Key Libraries}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
@@ -361,141 +382,6 @@ r<RET> & Split line\tn
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
 \par\addvspace{1.3em}
-
-\begin{tabularx}{5.377cm}{p{0.84609 cm} x{4.13091 cm} }
-\SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Copying Text}}  \tn
-
-% Row 
-\SetRowColor{LightBackground}
-yy & Yank entire line \tn 
-
-% Row 
-\SetRowColor{white}
-{[}\textit{n}{]}yy & Yank n lines [\textit{n}] \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-yw & Yank word \tn 
-
-% Row 
-\SetRowColor{white}
-y\$ & Yank to end of line \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-p & Put after character \tn 
-
-% Row 
-\SetRowColor{white}
-P & Put before character \tn 
-
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\end{tabularx}
-\par\addvspace{1.3em}
-
-
-
-\begin{tabularx}{5.377cm}{p{2.2 cm} x{2.777 cm} }
-\SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Setting options}}  \tn
-
-% Row 
-\SetRowColor{LightBackground}
-:set number & Turn on line numbers \tn 
-
-% Row 
-\SetRowColor{white}
-:set nonumber & Turn off line numbers \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-:set list & Display tabs and end of lines \tn 
-
-%Row
-\SetRowColor{white}
-:set nolist & Turn off list \tn 
-
-% Row
-\SetRowColor{LightBackground}
-:set showmode & Indicate input mode \tn 
-
-% Row
-\SetRowColor{white}
-:set noshowmode & Turn off showmode \tn 
-
-% Row
-\SetRowColor{LightBackground}
-:set wm=10 & Define automatic right margin \tn 
-
-% Row
-\SetRowColor{white}
-:set wm=0 & Turn off wm \tn 
-
-
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\SetRowColor{LightBackground}
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\mymulticolumn{2}{x{5.377cm}}{Remove semicolon for usage in \textasciitilde/.vimrc}  \tn 
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\end{tabularx}
-\par\addvspace{1.3em}
-
-\begin{tabularx}{5.377cm}{p{1.7 cm} x{3.277 cm} }
-\SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Multiple Input Windows}}  \tn
-
-% Row
-\SetRowColor{LightBackground}
-:vsplit file & Open another file vertically \tn 
-
-% Row
-\SetRowColor{white}
-:split file & Open another file horizontally \tn 
-
-% Row
-\SetRowColor{LightBackground}
-{<}CTRL{>}+w & Switch active window \tn 
-
-% Row
-\SetRowColor{white}
-:[\textit{cmd}] & Run [\textit{cmd}] in active window  \tn 
-
-
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\end{tabularx}
-\par\addvspace{1.3em}
-
-
-\begin{tabularx}{5.377cm}{p{1.5 cm} x{3.477 cm} }
-\SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Miscellaneous}}  \tn
-
-%Row
-\SetRowColor{LightBackground}
-xp & Transpose 2 characters \tn 
-
-%Row
-\SetRowColor{white}
-:r file & Read file into buffer \tn 
-
-%Row
-\SetRowColor{LightBackground}
-:![\textit{cmd}]\% & Run shell command [\textit{cmd}] on current file  \tn 
-
-%Row
-\SetRowColor{white}
-<CTRL>+l & Redraw screen \tn 
-
-%Row
-\SetRowColor{LightBackground}
-\$vi -r file & Recovery \tn 
-
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-\end{tabularx}
-\par\addvspace{1.3em}
-
-
 
 % That's all folks
 \end{multicols*}
