@@ -372,7 +372,7 @@ Async.RunSynchronously nestedWorkflow
 open System
 open System.Threading
 let cancellationSource = new CancellationTokenSource()        // Creates cancellation soruce
-Async.Start (testWorkflow, cancellationSource.Token)           // Attach the token to the workflow
+Async.Start (testWorkflow, cancellationSource.Token)          // Attach the token to the workflow
 cancellationSource.Cancel()                                   // Cancel the workflow
    </pre>
    <li>This is useful for error handling and is much easier than trying to keep track of flags inside workflows to signal a stop</li>
@@ -404,7 +404,7 @@ type MessageBasedCounter () =
       printfn "Count is: %i. Sum is: %i" newCount newSum 
       let rand = new Random()
       let ms = rand.Next(1,10)
-      Thread.Sleep ms                                 // Emulate a short delay
+      Thread.Sleep ms                                       // Emulate a short delay
       (newCount,newSum)
 
    static let agent = MailboxProcessor.Start(fun inbox -> 
@@ -416,8 +416,8 @@ type MessageBasedCounter () =
       messageLoop (0,0)                                     // Start the loop
       )
 
-   static member Add x = agent.Post x                       // Static keyword means an instance of this type is not required to call this function
-
+   static member Add x = agent.Post x                       // Static keyword means it is not required to create
+                                                            // an instance of this type to call the function
 let makeTask funct id = async {
    printfn "Task %i created" id
    funct id

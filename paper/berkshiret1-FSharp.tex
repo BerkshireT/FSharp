@@ -185,16 +185,19 @@ let & Bind value to a name \tn
 
 % Row 
 \SetRowColor{white}
-//, (**) & Inline and multi-line comments \tn 
+let rec & Recursive definition \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-\textit{indentations} & Separates code blocks \tn 
+//, (**) & Inline and multi-line comments \tn 
 
 % Row 
 \SetRowColor{white}
-\textit{whitespace} & Separates parameters \tn 
+\textit{indentations} & Separates code blocks \tn 
 
+% Row 
+\SetRowColor{LightBackground}
+\textit{whitespace} & Separates parameters \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
@@ -285,99 +288,73 @@ ExprShape & Module to traverse expression trees with fewer active patterns \tn
 \end{tabularx}
 \par\addvspace{1.3em}
 
-\begin{tabularx}{5.377cm}{p{1.5 cm} x{3.477 cm} }
+\begin{tabularx}{5.377cm}{p{3 cm} x{1.977 cm} }
 \SetRowColor{DarkBackground}
 \mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Asynchronous Workflows}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-x or [\textit{n}]x & Delete character ([\textit{n}] characters)\tn 
+async \{\} & Expressions in the curly braces become async \tn 
 
 % Row 
 \SetRowColor{white}
-r[\textit{c}] & Replace character with [\textit{c}] \tn 
+let! & Wait for the async task to return, similar to \textit{await} \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-dd or [\textit{n}]dd & Delete current line (or [\textit{n}] lines) \tn 
+Async.Start & Start a task asynchronously \tn 
 
 % Row 
 \SetRowColor{white}
-dw & Delete word \tn 
+Async.RunSynchronously & Block until all async events are completed \tn 
 
 % Row 
 \SetRowColor{LightBackground}
-d\$ & Delete to end of line \tn 
+Async.Parallel & Run the tasks in parallel \tn 
 
 % Row 
 \SetRowColor{white}
-u & Undo last editing command\tn 
+CancellationTokenSource & Workflows can be cancelled by invoking the cancel token \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
 \par\addvspace{1.3em}
 
-\begin{tabularx}{5.377cm}{p{1.5 cm} x{3.477 cm} }
+\begin{tabularx}{5.377cm}{p{2.1 cm} x{2.877 cm} }
 \SetRowColor{DarkBackground}
 \mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Actor Model}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-/[\textit{string}] & Escape following character \tn 
+MailBoxProcessor & Built in agent class \tn 
 
 % Row 
 \SetRowColor{white}
-?[\textit{string}] & Begin literal sequence \tn
+inbox.Receive() & Read a message \tn
  
 % Row 
 \SetRowColor{LightBackground}
-n & Next match\tn 
-
-% Row 
-\SetRowColor{white}
-N & Previous match \tn
+agent.Post & Post a message \tn 
  
-
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
 \par\addvspace{1.3em}
 
-\begin{tabularx}{5.377cm}{p{1.7 cm} x{3.277 cm} }
+\begin{tabularx}{5.377cm}{p{1.9 cm} x{3.077 cm} }
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Key Libraries}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Useful Libraries}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
-{[}\textit{n}{]}s[\textit{string}] & Substitute [\textit{n}] characters with [\textit{string}] \tn 
+FSharp.Data & Providers forworking with structured data files formats (CSV, HTML, JSON, etc.) \tn 
 
 % Row 
 \SetRowColor{white}
-cc[\textit{string}] & Change line with[\textit{string}] \tn
+FsUnit & Builds upon the .NET testing framework \tn
  
 % Row 
 \SetRowColor{LightBackground}
-{[}\textit{n}{]}cc[\textit{string}] & Change [\textit{n}] lines with [\textit{string}] \tn
-
-% Row 
-\SetRowColor{white}
-cw[\textit{string}] & Change word to [\textit{string}] \tn
- 
-% Row 
-\SetRowColor{LightBackground}
-c\$[\textit{string}] & Change end of line to [\textit{string}]\tn
-
-% Row 
-\SetRowColor{white}
-{[}\textit{n}{]}J & Join [textit{n}] lines \tn
- 
-% Row 
-\SetRowColor{LightBackground}
-r<RET> & Split line\tn
-
- 
-% Row 
-\SetRowColor{white}
-:\%s/[\textit{string}] /[\textit{newstring}] /g & Substitute [string] with [newstring] \tn
+FSharp.Charting & Compositional library for creating charts \tn
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
