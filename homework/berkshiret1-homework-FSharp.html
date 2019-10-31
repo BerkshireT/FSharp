@@ -29,17 +29,44 @@
 <ol>
 
 <li>
-<b>Sequences/Types</b> (10 points) 
+<b>Asynchronous Workflows</b> (10 points): Create an asynchronous workflow to fetch the web pages of a given URL list of size n. 
+After the pages are fetched, their length should be printed to the console. You will need to use the System.Net and 
+Microsoft.FSharp.Control.WebExtensions libraries.
+<br>
+Test input:
+<br>
+<pre>
+let urls = [ "http://www.google.com"
+             "http://www.udayton.edu"
+             "http://www.youtube.com" ]
+urls
+    |> Seq.map fetchAsync // your implementation
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> ignore
+    printfn "All urls fetched"
+    Console.ReadLine() |> ignore
+</pre>
+Test output:
+<pre>
+Read 47328 characters for http://www.google.com
+Read 115757 characters for http://www.udayton.edu
+Read 331633 characters for http://www.youtube.com
+All urls fetched
+</pre>
+</li>
+
+<li>
+<b>Sequences/Types</b> (10 points)
 <br/>
-Define a generic binary tree type and use <code>yield</code>/<code>yield!</code> to create a single sequence representing the inorder traversal of the tree.
-<br/>
-Then print the first and last element of the traversal.
+Define a generic binary tree type and use <code>yield</code>/<code>yield!</code> to create a single sequence representing the 
+inorder traversal of the tree. Then print the first and last element of the traversal. The tree type should be a discriminated 
+union and the inorder traversal should only be around 10 lines of code.
 <br>
 Test input/output:
 <pre>
 let tree1 = Tree(6, Tree(2, Leaf(1), Leaf(3)), Leaf(9))
 let seq1 = inorder tree1
-printfn "%A" seq1
 let first = Seq.head seq1
 let last = Seq.last seq1
 printfn "First element: %A" first                         // 1
@@ -52,11 +79,6 @@ let last2 = Seq.last trav2
 printfn "First element: %A" first2                         // 2
 printfn "Last element: %A" last2                           // 16
 </pre>
-</li>
-
-<li>(10 points)
-<br/>
-<br/>
 </li>
 
 <li>(10 points) 
