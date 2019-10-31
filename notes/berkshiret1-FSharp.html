@@ -104,6 +104,7 @@ match list with
       <li>The actor model of concurrency is built in via <tt>MailboxProcessor</tt></li>
       <li>True CPU parallelism can be achieved using the .NET Task Parallel Library</li>
    </ul>
+<li><a href="#misc">Miscellaneous Aspects</a></li>
 </ul>
 
 <h2 id="algebraic"><hr align="left" width="40%"/>
@@ -334,15 +335,172 @@ let result =                                                                    
 Asynchronous, Concurrent, and Parallel Programming
 <hr align="left" width="40%"/></h2>
 <ul>
-<li>Actor Model</li>
-<li>Coroutines</li>
+<li>Asynchronous Workflows</li>
+<ul>
+   <li>Built in asynchronous workflows make writing async code easier</li>
+   <li>Workflows are objects that encapsulate a task and provide useful operations to manage them</li>
+   <li>Asynchronous (library) workflow example:</li>
+   <pre>
+open System
+let timerWithAsync = 
+   let timer = new System.Timers.Timer(2000)
+   let timerEvent = Async.AwaitEvent (timer.Elapsed) |> Async.Ignore       // Create async workflow and ignore its output
+
+   timer.Start()                                                           // Start async work
+
+   // Do some other computations
+
+   Async.RunSynchronously timerEvent                                       // Block until async event completed
+   </pre>
+   <li>Manually created nested workflows:</li>
+   <pre>
+let otherWorkflow = async {                                // Expressions in async{} can be executed in the background
+   do! Async.Sleep 2000
+   }
+let nestedWorkflow  = async {
+   let! childWorkflow = Async.StartChild otherWorkflow     // Start
+
+   do! Async.Sleep 100                                     // Do some work
+
+   let! result = childWorkflow                             // Wait for the child
+   }
+Async.RunSynchronously nestedWorkflow  
+   </pre>
+   <li>The operators followed by bang (<code>let!</code>, <code>do!</code>, etc) are synonymous to calling <code>await</code> in most other languages</li>
+   <li>Asynchronous workflows can also be cancelled manually</li>
+   <pre>
+open System
+open System.Threading
+let cancellationSource = new CancellationTokenSource()        // Creates cancellation soruce
+Async.Start (testWorkflow, cancellationSource.Token)           // Attach the token to the workflow
+cancellationSource.Cancel()                                   // Cancel the workflow
+   </pre>
+   <li>This is useful for error handling and is much easier than trying to keep track of flags inside workflows to signal a stop</li>
+   <li>Any nested async call will check the token automatically</li>
+   <li>Tasks can also be run in parallel by using <code>Async.Parallel</code></li>
+</ul>
+<li>Actor Model of Concurrency</li>
+<ul>
+   <li>Built in agent class called <code>MailboxProcessor</code></li>
+   <li>Similar to Erlang agents, but they do not work across process boundaries</li>
+   <pre>
+let agent = MailboxProcessor.Start(fun inbox-> 
+   let rec messageLoop() = async {
+      let! msg = inbox.Receive()                        // Read a message
+      printfn "Message is: %s" msg
+      return! messageLoop()                             // Infinite loop
+      }
+   messageLoop() 
+   )
+agent.Post "CPS"
+agent.Post "452"
+   </pre>
+   <li>Here is a simple counter agent example:</li>
+   <pre>
+type MessageBasedCounter () = 
+   static let updateState (count,sum) msg =                
+      let newSum = sum + msg
+      let newCount = count + 1
+      printfn "Count is: %i. Sum is: %i" newCount newSum 
+      let rand = new Random()
+      let ms = rand.Next(1,10)
+      Thread.Sleep ms                                 // Emulate a short delay
+      (newCount,newSum)
+
+   static let agent = MailboxProcessor.Start(fun inbox -> 
+      let rec messageLoop oldState = async{
+         let! msg = inbox.Receive()                         // Read a message
+         let newState = updateState oldState msg
+         return! messageLoop newState                       // Infinite loop
+         }
+      messageLoop (0,0)                                     // Start the loop
+      )
+
+   static member Add x = agent.Post x                       // Static keyword means an instance of this type is not required to call this function
+
+let makeTask funct id = async {
+   printfn "Task %i created" id
+   funct id
+   }
+[1..5]
+   |> List.map (fun x -> makeTask MessageBasedCounter.Add x)
+   |> Async.Parallel
+   |> Async.RunSynchronously
+   |> ignore
+   </pre>
+</ul>
+</ul>
+
+<h2 id="misc"><hr align="left" width="40%"/>
+Miscellaneous
+<hr align="left" width="40%"/></h2>
+<ul>
 <li>Lazy Evaluation</li>
+<ul>
+   <li>F# uses eager evaluation by default, but lazy evaluation can be invoked</li>
+   <pre>
+let x = 100
+let result = lazy (x + 10)         // lazy freezes the expression and Force evaluates it
+printfn "%i" (result.Force())      // 110
+   </pre>
+   <li>The <code>seq</code> type is also lazily evaluated</li>
+   <li>A sequence can be any normal <code>IEnumerable</code> collection</li>
+   <pre>
+let seq1 = seq { for x in 1 .. 10 do yield x * x }   // seq [1; 4; 9; 16; ...]
+let seq2 = seq { for x in 1 .. 10 -> x * x }         // equivalent
+   </pre>
+   <li>The <code>yield</code> and <code>yield!</code> keywords create subsequences</li>
+   <li><code>yield</code> creates nested subsequences i.e. <code>seq{seq{...{seq{'T}</code></li>
+   <li><code>yield!</code> creates a "flattened" subsequence i.e. <code>seq{'T}</code></li>
+</ul>
+<li>Continuations</li>
+<ul>
+   <li>Since passing functions in F# is so simple, continuations are a natural extension of the language</li>
+   <pre>
+let divideWithContinuation breakCase successCase x y =
+   if (y = 0)
+   then breakCase()
+   else successCase (x / y)
+
+let zeroCase () = printfn "broke out"
+let regularCase x = printfn "%A" x
+let good = divideWithContinuation zeroCase regularCase 6 3   // 2
+let bad = divideWithContinuation zeroCase regularCase 6 0    // "broke out"
+   </pre>
+   <li>This also allows for Continuation Passing Style</li>
+   <pre>
+let x = 1 in
+   let y = 2 in
+      let z = x + y in
+         z
+
+1 |> (fun x ->              // This is the equivalent CPS transformation
+   2 |> (fun y ->
+      x + y |> (fun z ->
+         z)))
+   </pre>
+</ul>
+<li>Closures</li>
+<ul>
+   <li>While most F# uses will be with the traditional object-field approach to encapsulate state, closures are still possible</li>
+   <pre>
+let simpleClosure = 
+  let scope = "old scope" 
+  let enclose() = 
+      sprintf "%s" scope 
+  let scope = "new scope" 
+  sprintf "%s --- %s" scope (enclose())
+
+printfn "%A" simpleClosure                  // "new scope --- old scope"
+   </pre>
+</ul>
 </ul>
 
 <h2><hr align="left" width="40%"/>
 Exercises
 <hr align="left" width="40%"/></h2>
 <ul>
+<li>...</li>
 <li>...</li>
 <li>...</li>
 </ul>
@@ -356,36 +514,36 @@ Exercises
 
 <tr>
 <td>
-"<a href="https://en.wikipedia.org/wiki/F_Sharp_(programming_language)">F Sharp (programming language)</a>."
-<i>Wikipedia: The Free Encyclopedia</i>. Wikimedia Foundation, Inc. 21 October 2019.
+"<a href="https://en.wikipedia.org/wiki/F_Sharp_(programming_language)">F sharp (programming language)</a>."
+(2019). <i>Wikipedia: The Free Encyclopedia</i>. Wikimedia Foundation, Inc.
 </td>
 </tr>
 
 <tr>
 <td>
-"<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/">F# Guide</a>."
-<i>Microsoft</i>. Microsoft, 08 February 2018.
+"<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/">F# guide</a>."
+(2018). <i>Microsoft</i>. Microsoft.
 </td>
 </tr>
 
 <tr>
 <td>
-“<a href="https://fsharp.org/">F# Software Foundation</a>.”
-<i>F# Software Foundation</i>, F# Software Foundation, 2019.
+“<a href="https://fsharp.org/">F# software foundation</a>.”
+(2019). <i>F# Software Foundation</i>, F# Software Foundation.
 </td>
 </tr>
 
 <tr>
 <td>Syme, Don, et al.
-"<a href="https://fsharp.org/specs/language-spec/4.1/FSharpSpec-4.1-latest.pdf">The F# 4.1 Language Specification</a>."
-<i>F# Software Foundation</i>, 2016.
+"<a href="https://fsharp.org/specs/language-spec/4.1/FSharpSpec-4.1-latest.pdf">The f# 4.1 language specification</a>."
+(2016). <i>F# Software Foundation</i>.
 </td>
 </tr>
 
 <tr>
 <td>W., Scott,
-"<a href="https://fsharpforfunandprofit.com/posts/key-concepts/">Four Key Concepts</a>."
-<i>fsharpforfunandprofit</i>, 06 April 2012.
+"<a href="https://fsharpforfunandprofit.com/posts/key-concepts/">Four key concepts</a>."
+(2012). <i>fsharpforfunandprofit</i>.
 </td>
 </tr>
 
