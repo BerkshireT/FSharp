@@ -46,7 +46,6 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
     <Compile Include="Syntax.fs" />
@@ -55,6 +54,7 @@
     <Compile Include="Piping-Composition-Currying.fs" />
     <Compile Include="Concurrency.fs" />
     <Compile Include="Misc.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
