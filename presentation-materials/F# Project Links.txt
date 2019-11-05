@@ -1,0 +1,26 @@
+Typed Regex Provider for regular expressions
+http://fsprojects.github.io/FSharp.Text.RegexProvider/
+
+F# R Type Provider: R interoperability, discovers R packages and makes them .NET namespaces !!
+http://bluemountaincapital.github.io/FSharpRProvider/
+
+F# Python Provider: Python interoperability
+http://fsprojects.github.io/FSharp.Interop.PythonProvider/
+
+F# Model-View-Controller for WPF
+http://fsprojects.github.io/FSharp.Desktop.UI/
+
+F# quotation to OpenCL translation for work with GPUs
+https://github.com/YaccConstructor/Brahma.FSharp
+
+Fable: F# to JS compiler
+https://fable.io/
+
+F# Azure Storage communication; mainly for immutable records/asyc
+https://github.com/daniel-chambers/FSharp.Azure.Storage
+
+Unquote: Assertions for unit tests using F# quotations for better failure messages/step-by-step eval
+https://github.com/SwensenSoftware/Unquote
+
+FSound: library for sound processing
+https://github.com/albertp007/FSound
