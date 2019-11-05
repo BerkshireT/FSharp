@@ -5,6 +5,7 @@
 %   Date    Version   Initials  Comments
 %-------------------------------------------
 %  31Oct19 01.00.00  TPB      Initial release
+%  4Nov19  01.01.00  TPB      Moved columns
 
 \documentclass[10pt,letterpaper]{letter}
 
@@ -95,7 +96,7 @@
 \begin{tabularx}{5.377cm}{p{5.377 cm} x{0 cm} }
 
 \SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Key features}}  \tn
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Key Features}}  \tn
 
 % Row 
 \SetRowColor{LightBackground}
@@ -117,57 +118,6 @@ Integrated with .NET \tn
 \SetRowColor{LightBackground}
 Metaprogramming\tn
 
-
-\hhline{>{\arrayrulecolor{DarkBackground}}--}
-
-\end{tabularx}
-
-\par\addvspace{1.3em}
-
-\begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
-
-\SetRowColor{DarkBackground}
-\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Algebraic Types}}  \tn
-
-% Row 
-\SetRowColor{LightBackground}
-fun() & Function \tn 
-
-% Row 
-\SetRowColor{white}
-unit & A function with one range value \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-type & Keyword to declare custom types \tn 
-
-% Row 
-\SetRowColor{white}
-(x,y) & Tuples can be heterogeneous \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-\{x:int, y:float\} & Records are labelled tuples \tn 
-
-% Row 
-\SetRowColor{white}
-I of int | B of bool & Discriminated unions \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-<'a> & Single quote denotes generic type \tn 
-
-% Row 
-\SetRowColor{white}
-Option & The option type is either \textit{Some} or \textit{None} \tn 
-
-% Row 
-\SetRowColor{LightBackground}
-{[ ]} & Lists are immutable and homogeneous \tn 
-
-% Row 
-\SetRowColor{white}
-seq\{\} & Sequences use \textit{yield} and \textit{yield!} to create infinite data types \tn 
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 
@@ -246,6 +196,57 @@ when & Guards help with complicated pattern matching \tn
 
 \hhline{>{\arrayrulecolor{DarkBackground}}--}
 \end{tabularx}
+\par\addvspace{1.3em}
+
+\begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
+
+\SetRowColor{DarkBackground}
+\mymulticolumn{2}{x{5.377cm}}{\bf\textcolor{white}{Algebraic Types}}  \tn
+
+% Row 
+\SetRowColor{LightBackground}
+fun() & Function \tn 
+
+% Row 
+\SetRowColor{white}
+unit & A function with one range value \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+type & Keyword to declare custom types \tn 
+
+% Row 
+\SetRowColor{white}
+(x,y) & Tuples can be heterogeneous \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+\{x:int, y:float\} & Records are labelled tuples \tn 
+
+% Row 
+\SetRowColor{white}
+I of int | B of bool & Discriminated unions \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+<'a> & Single quote denotes generic type \tn 
+
+% Row 
+\SetRowColor{white}
+Option & The option type is either \textit{Some} or \textit{None} \tn 
+
+% Row 
+\SetRowColor{LightBackground}
+{[ ]} & Lists are immutable and homogeneous \tn 
+
+% Row 
+\SetRowColor{white}
+seq\{\} & Sequences use \textit{yield} and \textit{yield!} to create infinite data types \tn 
+
+\hhline{>{\arrayrulecolor{DarkBackground}}--}
+
+\end{tabularx}
+
 \par\addvspace{1.3em}
 
 \begin{tabularx}{5.377cm}{p{1.2 cm} x{3.777 cm} }
