@@ -1,92 +1,151 @@
-<div id="F#">
-<h2>F# Homework</h2>
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="pl.css"/>
+    <title>F# Homework</title>
+</head>
 
-<b>Author</b>: Tyler Berkshire
-<br/>
-<br/>
-<b>CPS 452: Emerging Programming Languages, Fall 2019</b>: 
-<br/>
-<br/>
+<body>
+<header>F# Homework</header>
+<article>
+    <b>Author</b>: Tyler Berkshire
+    <br/>
+    <br/>
+    <b>CPS 452: Emerging Programming Languages, Fall 2019</b>: 
+    <br/>
+    <br/>
 
 
-<b>Assigned</b>:
-<br/>
-<b>Due</b>: 
-<br/>
-<br/>
-<b>Total points</b>: 30 points
-<br/>
-<br/>
-<a href="http://isidore.udayton.edu">Isidore</a> |
-<a href="http://academic.udayton.edu/SaverioPerugini/courses/cps343/style.html">Style guide</a> |
-<a href="#integrity">Academic Integrity</a> |
-<a href="#evaluation">Evaluation Criteria</a> 
-<br/>
-<hr noshade size="2"/>
+    <b>Assigned</b>: November 6, 2019
+    <br/>
+    <b>Due</b>: November 13, 2019
+    <br/>
+    <br/>
+    <b>Total points</b>: 30 points
+    <br/>
+    <br/>
+    <a href="http://isidore.udayton.edu">Isidore</a> |
+    <a href="http://academic.udayton.edu/SaverioPerugini/courses/cps343/style.html">Style guide</a> |
+    <a href="#integrity">Academic Integrity</a> |
+    <a href="#evaluation">Evaluation Criteria</a> 
+    <br/>
+    <hr noshade size="2"/>
 
-<br/>
+    <br/>
 
-<ol>
+    <ol>
+    <li>
+    <b>Asynchronous Workflows</b> (10 points): Create an asynchronous workflow to fetch the web pages of a given URL list of size n. 
+    After the pages are fetched, their length should be printed to the console. You will need to use the System.Net and 
+    Microsoft.FSharp.Control.WebExtensions libraries.
+    <br>
+    Test input:
+    <br>
+    <code class="code-block">
+        |let urls = [ "http://www.google.com"<br/>
+        |\t\t\t\t"http://www.udayton.edu"<br/>
+        |\t\t\t\t"http://www.youtube.com" ]<br/>
+        |urls<br/>
+        |\t|&gt; Seq.map fetchAsync // your implementation<br/>
+        |\t|&gt; Async.Parallel<br/>
+        |\t|&gt; Async.RunSynchronously<br/>
+        |\t|&gt; ignore<br/>
+        |printfn "All urls fetched"<br/>
+        |Console.ReadLine() |&gt; ignore
+    </code>
+    Test output:
+    <code class="code-block">
+        |Read 47328 characters for http://www.google.com<br/>
+        |Read 115757 characters for http://www.udayton.edu<br/>
+        |Read 331633 characters for http://www.youtube.com<br/>
+        |All urls fetched
+    </code>
+    </li>
 
-<li>
-<b>Asynchronous Workflows</b> (10 points): Create an asynchronous workflow to fetch the web pages of a given URL list of size n. 
-After the pages are fetched, their length should be printed to the console. You will need to use the System.Net and 
-Microsoft.FSharp.Control.WebExtensions libraries.
-<br>
-Test input:
-<br>
-<pre>
-let urls = [ "http://www.google.com"
-             "http://www.udayton.edu"
-             "http://www.youtube.com" ]
-urls
-    |> Seq.map fetchAsync // your implementation
-    |> Async.Parallel
-    |> Async.RunSynchronously
-    |> ignore
-    printfn "All urls fetched"
-    Console.ReadLine() |> ignore
-</pre>
-Test output:
-<pre>
-Read 47328 characters for http://www.google.com
-Read 115757 characters for http://www.udayton.edu
-Read 331633 characters for http://www.youtube.com
-All urls fetched
-</pre>
-</li>
+    <li>
+    <b>Sequences/Types</b> (10 points)
+    <br/>
+    Define a generic binary tree type and use <code>yield</code>/<code>yield!</code> to create a single sequence representing the 
+    inorder traversal of the tree. Then print the first and last element of the traversal. The tree type should be a discriminated 
+    union and the inorder traversal should only be around 10 lines of code.
+    <br>
+    Test input/output:
+    <code class="code-block">
+        |let tree1 = Tree(6, Tree(2, Leaf(1), Leaf(3)), Leaf(9))<br/>
+        |let seq1 = inorder tree1<br/>
+        |let first = Seq.head seq1<br/>
+        |let last = Seq.last seq1<br/>
+        |printfn "First element: %A" first // 1<br/>
+        |printfn "Last element: %A" last // 9<br/>
+        |<br/>
+        |let tree2 = Tree(10, Tree(4, Leaf(2), Leaf(5)), Tree(15, Tree(13, Leaf(12), Leaf(14)), Leaf(16)))<br/>
+        |let trav2 = inorder tree2<br/>
+        |let first2 = Seq.head trav2<br/>
+        |let last2 = Seq.last trav2<br/>
+        |printfn "First element: %A" first2 // 2<br/>
+        |printfn "Last element: %A" last2 // 16<br/>
+    </code>
+    </li>
 
-<li>
-<b>Sequences/Types</b> (10 points)
-<br/>
-Define a generic binary tree type and use <code>yield</code>/<code>yield!</code> to create a single sequence representing the 
-inorder traversal of the tree. Then print the first and last element of the traversal. The tree type should be a discriminated 
-union and the inorder traversal should only be around 10 lines of code.
-<br>
-Test input/output:
-<pre>
-let tree1 = Tree(6, Tree(2, Leaf(1), Leaf(3)), Leaf(9))
-let seq1 = inorder tree1
-let first = Seq.head seq1
-let last = Seq.last seq1
-printfn "First element: %A" first                         // 1
-printfn "Last element: %A" last                           // 9
+    <li>
+    <b>Actor Model of Concurrency</b> (10 points)
+    <br/>
+    Extend the following code for an actor to keep a running sum based on the messages it receives. 
+    Assuming the sum starts at 0, if the first message is 3, then the new sum will be 3. If the next 
+    message is 5, then the new sum will be 8, etc. Print these sums to the console. Note: It is okay 
+    for the print statements to be a bit garbled.
+    <code class="code-block">
+        |open System<br/>
+        |open System.Threading<br/>
+        |type MessageBasedCounter () =<br/>
+        |\tstatic let updateState (count,sum) msg =<br/>              
+        |\t\t// your implementation<br/>
+        |\t\tlet rand = new Random()<br/>
+        |\t\tlet ms = rand.Next(1,10) // this emulates a short delay<br/>
+        |\t\tThread.Sleep ms<br/>
+        |\t\t// your implementation<br/>
+        |<br/>
+        |\tstatic let agent = MailboxProcessor.Start(fun inbox -&gt;<br/>
+        |\t\t// your implementation<br/>
+        |\t\t)<br/>
+        |<br/>
+        |\tstatic member Add x =<br/>
+        |\t\t// your implementation<br/>
+        |<br/>
+        |let makeTask funct id = async {<br/>
+        |\tprintfn "Task %i created" id<br/>
+        |\tfunct id<br/>
+        |\t}
+    </code>
+    Test input:
+    <code class="code-block">
+        |[1..5]<br/>
+        |\t|&gt; List.map (fun x -&gt; makeTask MessageBasedCounter.Add x)<br/>
+        |\t|&gt; Async.Parallel<br/>
+        |\t|&gt; Async.RunSynchronously<br/>
+        |\t|&gt; ignore
+    </code>
+    Test output:
+    <code class="code-block">
+        |Task 1 created<br/>
+        |Task 3 created<br/>
+        |Task 2 created<br/>
+        |Task 4 created<br/>
+        |Task 5 created<br/>
+        |Number of additions: 1. Sum is: 4<br/>
+        |Number of additions: 2. Sum is: 6<br/>
+        |Number of additions: 3. Sum is: 9<br/>
+        |Number of additions: 4. Sum is: 10<br/>
+        |Number of additions: 5. Sum is: 15
+    </code>
+    </li>
+    </ol>
 
-let tree2 = Tree(10, Tree(4, Leaf(2), Leaf(5)), Tree(15, Tree(13, Leaf(12), Leaf(14)), Leaf(16)))
-let trav2 = inorder tree2
-let first2 = Seq.head trav2
-let last2 = Seq.last trav2
-printfn "First element: %A" first2                         // 2
-printfn "Last element: %A" last2                           // 16
-</pre>
-</li>
+    <p class="top"><a href="#">TOC</a></p>
+</article>
 
-<li>(10 points) 
-<br/>
-<br/>
-</li>
-
-</ol>
-
-<p class="top"><a href="#">TOC</a></p>
-</div>
+<script src="pl.js"></script>
+</body>
+</html>
