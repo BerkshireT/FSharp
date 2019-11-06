@@ -279,7 +279,7 @@ Piping, Composition, and Currying
 <ul>
    <li>Used to perform a sequence of operations on some value</li>
    <li>Similar to UNIX, the output of each function becomes the input for the next</li>
-   <li><code>\></code> is the symbol for a pipe</li>
+   <li><code>|></code> is the symbol for a pipe</li>
    <pre>
 let list = [1 .. 10 ] |> Seq.filter (fun x -> x % 2 <> 0)
                       |> Seq.map (fun x -> x * x)
@@ -310,7 +310,7 @@ foo (bar >> baz)                   // Function composition
    <li>Applies arguments to functions to create new functions</li>
    <li>Functions taking more than one argument are automatically curried by the compiler</li>
    <pre>
-let printTwo a b = printfn "%A and %A" a b      // Uncurried (int -> unit)
+let printTwo(a,b) = printfn "%A and %A" a b      // Uncurried (int * int -> unit)
 
 let printTwoCurried a =                         // Curried   (int -> int -> unit)
    let printTwoSecond b =
@@ -324,7 +324,7 @@ filterEvens [ 1 .. 5 ]                               // [2;4]
 </pre>
    <li>.NET base class library functions are often re-written in wrappers to better match the partial function application form</li>
 <pre>
-let replace oldStr newStr (s:String) = s.Replace(oldValue = oldStr, newValue = newStr)   // Input string is now the last parameter
+let replace oldStr newStr (s:string) = s.Replace(oldValue = oldStr, newValue = newStr)   // Input string is now the last parameter
 let result =                                                                             // "452"
    "CPS"
    |> replace "CPS" "452"
@@ -344,7 +344,7 @@ Asynchronous, Concurrent, and Parallel Programming
    <pre>
 open System
 let timerWithAsync = 
-   let timer = new System.Timers.Timer(2000)
+   let timer = new System.Timers.Timer(2000.0)
    let timerEvent = Async.AwaitEvent (timer.Elapsed) |> Async.Ignore       // Create async workflow and ignore its output
 
    timer.Start()                                                           // Start async work
