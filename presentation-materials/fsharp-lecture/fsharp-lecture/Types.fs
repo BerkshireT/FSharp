@@ -27,7 +27,7 @@ let run() =
           printf "Professor: %s, Students: " lastname
           for student in students do printf "%s, " student.Last
           printfn ""
-//  professorPrint p1 |> ignore
+//   professorPrint p1 |> ignore
 
 //   printfn "*** Pretty Print: %A" t1
    let taPrint x =
@@ -39,15 +39,15 @@ let run() =
          printf "TA: %s, Professor: %s, Course: %s" (student.First + " " + student.Last) (getLastName staff) course
 //   taPrint t1 |> ignore
 
-   // tuples
+   // ** tuples
    let tup1 = ("CPS", 452)
    let tup2 = ("CPS", 452, [s1;s2;s3])
-//   printfn "First: %A, Second: %A " (fst tup1) (snd tup1)
+   printfn "First: %A, Second: %A " (fst tup1) (snd tup1)
    //printfn "%A %A %A" (fst tup2) (snd tup2) (thd tup2)      // error
    let fst1 (x, _, _) = x
    let snd1 (_, x, _) = x
    let thd (_, _, x) = x
-//   printfn "%A %A %A" (fst1 tup2) (snd1 tup2) (thd tup2)
+   printfn "%A %A %A" (fst1 tup2) (snd1 tup2) (thd tup2)
    tup1.GetHashCode() |> ignore             // implicit hash values for dict use
 
    printfn "*** End of Types demo ***"

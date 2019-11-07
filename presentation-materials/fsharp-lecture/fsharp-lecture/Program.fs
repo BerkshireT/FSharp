@@ -1,22 +1,22 @@
 ﻿module main
 open System
 
-open Syntax
-Syntax.run()
+//open Syntax
+//Syntax.run()
 
-open Types
+//open Types
 //Types.run()
 
-open Piping_etc
+//open Piping_etc
 //Piping_etc.run()
 
-open Metaprogramming
+//open Metaprogramming
 //Metaprogramming.run()
 
-open Concurrency
-//Concurrency.run()
+//open Concurrency
+Concurrency.run()
 
-open Misc
+//open Misc
 //Misc.run()
 
 Console.ReadLine() |> ignore

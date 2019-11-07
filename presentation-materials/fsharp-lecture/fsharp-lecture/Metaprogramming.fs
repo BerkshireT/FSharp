@@ -4,14 +4,14 @@ open Microsoft.FSharp.Quotations.Patterns
 open Microsoft.FSharp.Quotations.DerivedPatterns
 
 let run() =
-    // Quotations
+    // ** Quotations
     let quote: Expr<'T> = <@ "CPS " + "452" @>   // typed
     let quote2: Expr = <@@ 1 + 1 @@>             // untyped
-//    printfn "%A" quote
-//    printfn "%A" quote2
+    printfn "%A" quote
+    printfn "%A" quote2
 
     let complete = <@ let f x = x + 10 in f 20 @>
-//    printfn "%A" complete
+    printfn "%A" complete
     (* equivalent to
     let complete = <@ 
         let f x = x + 10
@@ -20,16 +20,16 @@ let run() =
 
     //let notComplete = <@ let f x = x + 10 @> // error
 
-    // Splicing
+    // ** Splicing
     let spliced = <@ "I'm in " + %quote @>
     let spliced2 = <@@ 1 + %%quote2 @@> // error
     //let spliced2 = <@@ "I'm in " + %%quote2 @@> // error, doesn't catch invalid type operation
     //let spliced2 = <@@ 1 + %%quote @@> // error, can't cast typed quotation as untyped
-//    printfn "%A" spliced
-//    printfn "%A" spliced2
+    printfn "%A" spliced
+    printfn "%A" spliced2
 
-    // F# code translation example from Microsoft docs
-    (*
+    // ** F# code translation example from Microsoft docs
+    
     let printQ expr =
         let rec print expr =
             match expr with
@@ -90,5 +90,5 @@ let run() =
     printQ exprCall
     printQ exprUnimplemented
     printQ <@@ let f x = x + 10 in f 10 @@>
-    *)
+
     printfn "*** End of Metaprogramming demo ***"

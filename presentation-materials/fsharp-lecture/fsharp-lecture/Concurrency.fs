@@ -2,7 +2,7 @@
 open System.Threading // only needed for cancellation tokens
 
 let run() = 
-    // Async workflows
+    // ** Async workflows
     let asyncTimer x =
         let timer = new System.Timers.Timer(x)
         let timerEvent = Async.AwaitEvent (timer.Elapsed) |> Async.Ignore
@@ -26,7 +26,7 @@ let run() =
     cancellationSource.Cancel()
     printfn "Cancelled async task"
 
-    // Actor model
+    // ** Actor model
     let printerAgent = MailboxProcessor.Start(fun inbox-> 
        let rec messageLoop() = async {
           let! msg = inbox.Receive()                        // Read a message

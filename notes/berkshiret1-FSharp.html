@@ -443,6 +443,130 @@
    </ul>
    </ul>
 
+   <div class="subheader">F# Concept Matrix</div>
+   <table>
+   <tbody>
+   <tr>
+      <td>First-Class Functions</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>λ Expressions</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Higher-Order Functions</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>First-Class Closures</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Currying</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Continuation-Passing Style</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>First-Class Continuations</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Pattern Matching</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Strong Typing</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Type Systems</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Lazy Evaluation</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
+   </tr>
+   <tr>
+      <td>List/Generator Comprehension</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Message Passing</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Actor Model of Concurrency</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Coroutines</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
+   </tr>
+   <tr>
+      <td>Channels</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
+   </tr>
+   <tr>
+      <td>Communicating Sequential Processes</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="unchecked"></label></td>
+   </tr>
+   <tr>
+      <td>Homoiconic</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
+   </tr>
+   <tr>
+      <td>Concurrency</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Callbacks</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Type Inference</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Dynamic Dispatch</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+   </tr>
+   <tr>
+      <td>Dynamic Typing</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="unchecked"></label></td>
+   </tr>
+   <tr>
+      <td>Heterogeneous Lists</td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="unchecked"></label></td>
+   </tr>
+   </tbody>
+   
+   <script>
+      let checks = document.getElementsByClassName("checked");
+      let lines = document.getElementsByClassName("indeterminate");
+      
+      for (let i = 0; i < checks.length; i++) checks[i].checked = true;
+      
+      for (let i = 0; i < lines.length; i++) lines[i].indeterminate = true;
+      
+      function checkboxOnClick(self) {
+         switch (self.classList[0]) {
+            case "checked":
+               self.checked = true;
+               break;
+            case "indeterminate":
+               self.indeterminate = true;
+               break;
+            default:
+               self.checked = false;
+         }
+      }
+   </script>
+   </table>
+
    <div class="subheader">Exercises</div>
    <ol>
    <li>
