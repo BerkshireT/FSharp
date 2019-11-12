@@ -195,7 +195,7 @@
       </code>
    </ul>
    <li>The F# equivalent of an <code>eval</code> statement is implemented by compiling F# code with the F# PowerPack API</li>
-   <li>Here's an example of using quotations which translates simple F# code into expression objects and then prints back the F# code representation:</li>
+   <li>Here's an example of using quotations which translates simple F# code into expression objects and then prints back the F# code representation (Microsoft, 2018):</li>
    <code class="code-block">
       |open System<br/>
       |open Microsoft.FSharp.Quotations.Patterns<br/>
@@ -400,33 +400,6 @@
       <li><code>yield</code> creates nested subsequences i.e. <code>seq{seq{...{seq{'T}</code></li>
       <li><code>yield!</code> creates a "flattened" subsequence i.e. <code>seq{'T}</code></li>
    </ul>
-   <li>Continuations</li>
-   <ul>
-      <li>Since passing functions in F# is so simple, continuations are a natural extension of the language</li>
-      <code class="code-block">
-         |let divideWithContinuation breakCase successCase x y =<br/>
-         |\tif (y = 0)<br/>
-         |\tthen breakCase()<br/>
-         |\telse successCase (x / y)<br/>
-         |<br/>
-         |let zeroCase () = printfn "broke out"<br/>
-         |let regularCase x = printfn "%A" x<br/>
-         |let good = divideWithContinuation zeroCase regularCase 6 3 // 2<br/>
-         |let bad = divideWithContinuation zeroCase regularCase 6 0 // "broke out"
-      </code>
-      <li>This also allows for Continuation Passing Style</li>
-      <code class="code-block">
-         |let x = 1 in<br/>
-         |\tlet y = 2 in<br/>
-         |\t\tlet z = x + y in<br/>
-         |\t\t\tz<br/>
-         |<br/>
-         |1 |&gt; (fun x -&gt; // This is the equivalent CPS transformation<br/>
-         |\t2 |&gt; (fun y -&gt;<br/>
-         |\t\tx + y |&gt; (fun z -&gt;<br/>
-         |\t\t\tz)))<br/>
-      </code>
-   </ul>
    <li>Closures</li>
    <ul>
       <li>While most F# uses will be with the traditional object-field approach to encapsulate state, closures are still possible</li>
@@ -439,6 +412,18 @@
          |\tsprintf "%s --- %s" scope (enclose())<br/>
          |<br/>
          |printfn "%A" simpleClosure // "new scope --- old scope"
+      </code>
+   </ul>
+   <li>Tail Recursion</li>
+   <ul>
+      <li>The MIL (Microsoft Intermediate Language) F# is converted into does not automatically convert recusion to its tail form</li>
+      <li>However, if a function is written in tail form, the intermediate language takes extra steps to ensure the stack remains constant</li>
+      <code class="code-block">
+         |let factTail x =<br/>
+         |\tlet rec factTailHelp = x acc =<br/>
+         |\t\tif x <= 1 then acc<br/>
+         |\t\telse factTailHelp (x - 1) (acc * x)<br/>
+         |\tfactTailHelp x 1
       </code>
    </ul>
    </ul>
@@ -468,11 +453,11 @@
    </tr>
    <tr>
       <td>Continuation-Passing Style</td>
-      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
    </tr>
    <tr>
       <td>First-Class Continuations</td>
-      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="checked"></label></td>
+      <td><label><input type="checkbox" onclick="checkboxOnClick(this);" class="indeterminate"></label></td>
    </tr>
    <tr>
       <td>Pattern Matching</td>

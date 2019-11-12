@@ -16,7 +16,7 @@ let ctx = myCanvas.getContext_2d()
 // All these are immutables values
 let w = myCanvas.width
 let h = myCanvas.height
-let steps = 20
+let steps = 40
 let squareSize = 20
 
 // gridWidth needs a float wo we cast tour int operation to a float using the float keyword
@@ -39,7 +39,7 @@ printfn "%i" steps
       ctx.moveTo(0., v)
       ctx.lineTo(gridWidth, v)
     ) 
-ctx.strokeStyle <- !^"#ddd" // color
+ctx.strokeStyle <- !^"#e4a" // color
 
 // draw our grid
 ctx.stroke() 
