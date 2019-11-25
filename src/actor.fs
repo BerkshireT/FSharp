@@ -1,7 +1,12 @@
-// Tyler Berkshire
-// CPS 452, Fall 2019
-// F#
-// Solution to homework problem 3 - Actor Model of Concurrency
+//*******************************************************************************
+//
+//      filename:  actor.fs
+//
+//   description:  Solution to homework problem 3 - Actor Model of Concurrency
+//
+//        author:  Berkshire, Tyler P.
+//       Copyright (c) 2019 Saverio Perugini, University of Dayton
+//******************************************************************************
 
 module actor
 open System
