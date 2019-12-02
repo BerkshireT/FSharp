@@ -5,7 +5,7 @@
 //   description:  Code examples from Introduction to F# language html page
 //
 //        author:  Berkshire, Tyler P.
-//       Copyright (c) 2019 Saverio Perugini, University of Dayton
+//       Copyright (c) 2019 Tyler Berkshire, University of Dayton
 //******************************************************************************
 
 // Core F# //
